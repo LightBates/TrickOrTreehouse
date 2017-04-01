@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class Wave
@@ -24,6 +25,8 @@ public class Spawner_Spawn_Enemy : MonoBehaviour {
     private float lastSpawnTime;
     private int enemiesSpawned = 0;
 
+    public Sprite[] spriteList;
+
     // Use this for initialization
     void Start () {
         lastSpawnTime = Time.time;
@@ -47,6 +50,29 @@ public class Spawner_Spawn_Enemy : MonoBehaviour {
                 // update last spawntime, create a new enemy
                 lastSpawnTime = Time.time;
                 GameObject newEnemy = (GameObject)Instantiate(waves[currentWave].enemyPrefab);
+                int spriteIndex = Random.Range(0, 3);
+                newEnemy.GetComponent<Enemy_Movement>().spriteList = new List<Sprite>();
+                newEnemy.GetComponent<Enemy_Movement>().spriteList.Add(spriteList[spriteIndex]);
+                newEnemy.GetComponent<Enemy_Movement>().spriteList.Add(spriteList[spriteIndex + 3]);
+                newEnemy.GetComponent<Enemy_Movement>().spriteList.Add(spriteList[spriteIndex + 6]);
+
+                //Scream Bullies have less health but are fast
+                if (spriteIndex == 1)
+                {
+                    newEnemy.GetComponent<Enemy_Movement>().speed += 2;
+                    newEnemy.GetComponent<Enemy_Movement>().maxHealth -= 40;
+                    newEnemy.GetComponent<Enemy_Movement>().Health = newEnemy.GetComponent<Enemy_Movement>().maxHealth;
+                }
+
+                //Wolf Bullies have more health but are slow
+                else if (spriteIndex == 2)
+                {
+                    newEnemy.GetComponent<Enemy_Movement>().speed -= 1;
+                    newEnemy.GetComponent<Enemy_Movement>().maxHealth += 60;
+                    newEnemy.GetComponent<Enemy_Movement>().Health = newEnemy.GetComponent<Enemy_Movement>().maxHealth;
+                }
+
+                newEnemy.GetComponent<SpriteRenderer>().sprite = spriteList[spriteIndex];
                 newEnemy.GetComponent<Enemy_Movement>().waypoints = waypoints;
                 enemiesSpawned++;
             }

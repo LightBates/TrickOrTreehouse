@@ -31,7 +31,7 @@ public class GameManagerBehavior : MonoBehaviour {
         set
         {
             wave = value;
-            waveLabel.GetComponent<Text>().text = "WAVE: " + wave;
+            waveLabel.GetComponent<Text>().text = "WAVE: " + (wave + 1);
         }
     }
 
@@ -88,7 +88,6 @@ public class GameManagerBehavior : MonoBehaviour {
 
         if (gameOver)
         {
-            print("DONE!");
             SceneManager.LoadScene("StartingMenu", LoadSceneMode.Single);
         }
 	

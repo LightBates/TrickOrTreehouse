@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy_Movement : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class Enemy_Movement : MonoBehaviour {
     public float speed = 1.0f;
     private GameManagerBehavior gameManager;
     private float currentHealth;
+    public List<Sprite> spriteList;
 
     public float Health
     {
@@ -38,7 +40,6 @@ public class Enemy_Movement : MonoBehaviour {
     void Start () {
         lastWaypointSwitchTime = Time.time;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBehavior>();
-
         currentHealth = maxHealth;
     }
 
@@ -64,7 +65,24 @@ public class Enemy_Movement : MonoBehaviour {
                 currentWaypoint++;
                 // Update our time
                 lastWaypointSwitchTime = Time.time;
-                // TODO: Rotate into move direction
+
+                // Forward Facing Sprite
+                if (currentWaypoint == 0 | currentWaypoint == 2 | currentWaypoint == 4 | currentWaypoint == 6)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().sprite = spriteList[0];
+                }
+
+                // Right Facing Sprite
+                else if (currentWaypoint == 1 | currentWaypoint == 5 | currentWaypoint == 7)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().sprite = spriteList[1];
+                }
+
+                // Left Facing Sprite
+                else if (currentWaypoint == 3)
+                {
+                    gameObject.GetComponent<SpriteRenderer>().sprite = spriteList[2];
+                }
             }
             else
             {

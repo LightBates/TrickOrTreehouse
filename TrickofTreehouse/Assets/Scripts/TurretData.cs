@@ -17,6 +17,8 @@ public class TurretData : MonoBehaviour {
     private TurretLevel currentLevel;
     public GameObject bullet;
     public float fireRate;
+    public string turretType;
+    public int baseCost;
 
     public TurretLevel CurrentLevel
     {
